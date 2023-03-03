@@ -1,0 +1,46 @@
+<form action="{{route('progress.update', $progress->pg_id)}}" method="post">
+            @csrf
+            @method('put')
+            @php
+            $KG = new KeyGenerator();
+            $prepare_progress = $KG->DekripUUID($progress->uuid);
+            $data_progress = $KG->prepare_data($prepare_progress);
+            @endphp
+            <div class="form-group">
+                <label for="">Project</label>
+                <select class="form-control" name="kd_project" id="kd_project">
+                    @foreach ($projects as $project)
+                    @php
+                    $KG = new KeyGenerator();
+                    $prepare_project = $KG->DekripUUID($project->uuid);
+                    $data_project = $KG->prepare_data($prepare_project);
+                    @endphp
+                    <option value="{{ $project->kd_project }}"
+                        {{ ($project->kd_project == $progress->kd_project) ? 'selected' : '' }}>
+                        {{ $data_project->decrypt($project->pj_nama) }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Periode</label>
+                <input type="text" name="pg_periode" id="pg_periode" class="form-control datepicker"
+                    value="{{ $data_progress->decrypt($progress->pg_periode) }}">
+            </div>
+            <div class="form-group">
+                <label for="">Progress (%)</label>
+                <input type="text" name="pg_progres" id="pg_progres" class="form-control"
+                    value="{{ $data_progress->decrypt($progress->pg_progres) }}">
+            </div>
+            <div class="form-group">
+                <label for="">Act Cost</label>
+                <input type="number" name="pg_act_cost" id="pg_act_cost" class="form-control"
+                    value="{{ $data_progress->decrypt($progress->pg_act_cost) }}">
+            </div>
+            <div class="form-group">
+                <label for="">Issues</label>
+                <input type="text" name="pg_outstanding_issues" id="pg_outstanding_issues" class="form-control"
+                    value="{{ $data_progress->decrypt($progress->pg_outstanding_issues)}}">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Update">
+        </form>

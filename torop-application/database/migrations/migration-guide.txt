@@ -1,0 +1,6 @@
+//to cancel all migration: php artisan migration:rollback
+//to create table: php artisan make:migration create_table-name_table
+//to refresh table creation: php artisan migrate:refresh (deleting all table, and re assign 
+the table including the new one)
+//to apply 1 table creation and post it to database: php artisan migrate ( assigning table without
+re assign the table)
